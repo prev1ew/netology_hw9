@@ -1,0 +1,50 @@
+-- drop TABLE IF EXISTS "genres", "artists", "albums", "songs", "collections", 
+-- "m_track_collection", "m_artist_genre", "m_artist_album" CASCADE;
+
+
+create table if not exists genres (
+  id serial primary key,
+  name varchar(225)
+);
+
+create table if not exists artists (
+  id serial primary key,
+  name varchar(225)
+);
+
+create table if not exists albums (
+  id serial primary key,
+  name varchar(225),
+  album_year int
+);
+
+create table if not exists songs (
+  id serial primary key,
+  id_album int REFERENCES albums(ID),
+  name varchar(225),
+  duration int
+);
+
+create table if not exists collections (
+  id serial primary key,
+  name varchar(225),
+  year_collection int
+);
+
+CREATE TABLE IF NOT EXISTS public."m_track_collection"
+(
+  id_song int REFERENCES songs(ID),
+  id_collection int REFERENCES collections(ID)
+);
+
+CREATE TABLE IF NOT EXISTS public."m_artist_genre"
+(
+  id_artist int REFERENCES artists(ID),
+  id_genre int REFERENCES genres(ID)
+);
+
+CREATE TABLE IF NOT EXISTS public."m_artist_album"
+(
+  id_artist int REFERENCES artists(ID),
+  id_album int REFERENCES albums(ID)
+);
