@@ -1,0 +1,24 @@
+create table if not exists Жанры (
+	id serial primary key,
+	name varchar(225)
+);
+
+create table if not exists Исполнители (
+	id serial primary key,
+	name varchar(225),
+	id_жанра int references public.Жанры(id)
+);
+
+create table if not exists Альбомы (
+	id serial primary key,
+	id_исполнителя int references public.Исполнители(id),
+	name varchar(225),
+	album_year int
+);
+
+create table if not exists Треки (
+	id serial primary key,
+	name varchar(225),
+	duration int,
+	id_исполнителя int references public.Альбомы(id)
+);
